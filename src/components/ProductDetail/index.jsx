@@ -14,7 +14,7 @@ const ProductDetail = (props) => {
             .catch(error => console.log(error))
     }
 
-    useEffect(() => fetchData(), []);
+    useEffect(() => fetchData(), [id]);
 
     if (product) {
         return (
