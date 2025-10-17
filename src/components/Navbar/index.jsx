@@ -1,6 +1,22 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        let token = localStorage.getItem("token");
+        setIsLoggedIn(token !== null);
+    }, [isLoggedIn]);
+
+    const onLogoutHandler = () => {
+        localStorage.clear();
+        setIsLoggedIn(false);
+        navigate("/login");
+    }
+
     return (
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <Link class="navbar-brand" to="#">Eshop</Link>
@@ -24,8 +40,11 @@ const Navbar = () => {
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    {
+                        isLoggedIn
+                        ? <button className="btn btn-danger" onClick={onLogoutHandler}>Log Out</button>
+                        : <Link className="btn btn-primary" to="/login">Log In</Link>
+                    }
                 </form>
             </div>
         </nav>
