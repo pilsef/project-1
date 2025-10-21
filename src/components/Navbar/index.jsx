@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; 
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -16,6 +17,8 @@ const Navbar = () => {
         setIsLoggedIn(false);
         navigate("/login");
     }
+
+    const qty = useSelector(state => state.cartItemNumbers);
 
     return (
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -39,11 +42,14 @@ const Navbar = () => {
                         <Link class="nav-link" to="/contact">Contact</Link>
                     </li>
                 </ul>
+                
+                <Link className="btn btn-secondary mr-2" to="/cart">Cart ({qty})</Link>
+
                 <form class="form-inline my-2 my-lg-0">
                     {
                         isLoggedIn
-                        ? <button className="btn btn-danger" onClick={onLogoutHandler}>Log Out</button>
-                        : <Link className="btn btn-primary" to="/login">Log In</Link>
+                            ? <button className="btn btn-danger" onClick={onLogoutHandler}>Log Out</button>
+                            : <Link className="btn btn-primary" to="/login">Log In</Link>
                     }
                 </form>
             </div>
