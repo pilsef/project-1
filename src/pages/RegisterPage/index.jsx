@@ -1,24 +1,55 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik"
+import axios from "axios";
 import * as Yup from "yup"
 
 const RegisterPage = () => {
 
+    const [requestResponse, setRequestResponse] = useState({
+        message: "",
+        alertClass: ""
+    });
+
     const initialValues = {
-        firstName: "",
+        name: "",
+        username: "",
         email: "",
-        phone: "",
         password: ""
     };
-    const onSubmit = values => console.log("Form Data: ", values);
+
+    const navigate = useNavigate();
+
+    const onSubmit = (values) => {
+        // console.log("form data: ", values)
+        axios
+            .post("http://localhost:9191/api/auth/register", values)
+            .then(
+                (response) => {
+                    console.log(response.data);
+                    setRequestResponse({
+                        message: "Registration Successful",
+                        alertClass: "alert alert-success"
+                    });
+                    localStorage.setItem("token", response.data.access_token);
+                    navigate("/");
+                },
+                (error) => {
+                    console.log(error);
+                    setRequestResponse({
+                        message: "Registration Failed! Try Again.",
+                        alertClass: "alert alert-danger"
+                    });
+                }
+            )
+            .catch(error => console.log(error))
+    };
 
     const validationSchema = Yup.object({
-        firstName: Yup.string().required("first name is required"),
+        name: Yup.string().required("name is required"),
+        username: Yup.string().required("username is required"),
         email: Yup.string().required("email is required")
             .email("invalid email format"),
-        phone: Yup.string().required("phone number is required")
-            .length(10, "phone number must be 10 digits"),
         password: Yup.string().required("password is required")
             .min(6, "password must be at least 6 characters"),
     });
@@ -37,22 +68,42 @@ const RegisterPage = () => {
                 <div className="col-md-6">
                     <div className="wrapper">
 
+                        <div className={requestResponse.alertClass} role="alert">
+                            {requestResponse.message}
+                        </div>
+
                         <h2>Register</h2>
                         <hr />
 
                         <form onSubmit={formik.handleSubmit}>
                             <div className="form-group">
-                                <label>First Name</label>
+                                <label>Name</label>
                                 <input
                                     type="text" 
-                                    name="firstName"
-                                    className={formik.errors.firstName && formik.touched.firstName ? "form-control is-invalid" : "form-control"}
-                                    value={formik.values.firstName} 
+                                    name="name"
+                                    className={formik.errors.name && formik.touched.name ? "form-control is-invalid" : "form-control"}
+                                    value={formik.values.name} 
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                 />
-                                {formik.errors.firstName && formik.touched.firstName ?
-                                    (<small className="text-danger">{formik.errors.firstName}</small>)
+                                {formik.errors.name && formik.touched.name ?
+                                    (<small className="text-danger">{formik.errors.name}</small>)
+                                    : null
+                                }
+                            </div>
+
+                            <div className="form-group">
+                                <label>Username</label>
+                                <input
+                                    type="text" 
+                                    name="username"
+                                    className={formik.errors.username && formik.touched.username ? "form-control is-invalid" : "form-control"}
+                                    value={formik.values.username} 
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                />
+                                {formik.errors.username && formik.touched.username ?
+                                    (<small className="text-danger">{formik.errors.username}</small>)
                                     : null
                                 }
                             </div>
@@ -68,21 +119,6 @@ const RegisterPage = () => {
                                 />
                                 {formik.errors.email && formik.touched.email ?
                                     (<small className="text-danger">{formik.errors.email}</small>)
-                                    : null
-                                }
-                            </div>
-
-                            <div className="form-group">
-                                <label className="mt-2">Mobile Phone Number</label>
-                                <input
-                                    type="tel" 
-                                    name="phone"
-                                    className={formik.errors.phone && formik.touched.phone ? "form-control is-invalid" : "form-control"}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                />
-                                {formik.errors.phone && formik.touched.phone ?
-                                    (<small className="text-danger">{formik.errors.phone}</small>)
                                     : null
                                 }
                             </div>
