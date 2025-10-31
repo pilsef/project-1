@@ -9,7 +9,7 @@ const ProductList = () => {
 
     const fetchData = () => {
         axios
-            .get("https://api.escuelajs.co/api/v1/products")
+            .get("http://localhost:9191/api/products")
             .then(response => setProducts(response.data))
             .catch(error => console.log(error));
     };
@@ -22,7 +22,7 @@ const ProductList = () => {
             <div className="row row-cols-4">
                 {
                     products.map(p => (
-                        <Product key={p.id} data={p} />
+                        <Product key={p.productId} data={p} />
                     ))
                 }
             </div>

@@ -10,6 +10,15 @@ const CartItems = () => {
         <div className="card h-100 p-4">
             <h2 className="text-center">Items ({cartItemNumbers})</h2>
 
+            {/* <div>
+                {JSON.stringify(
+                    items.map(item => {
+                        const {productId, quantity, price} = item;
+                        return {productId, quantity, amount: quantity * price};
+                    })
+                )}
+            </div> */}
+
             <div>
                 {items.map(item => (
                     <CartItem data={item} />

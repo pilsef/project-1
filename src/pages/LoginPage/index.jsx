@@ -12,7 +12,7 @@ const LoginPage = () => {
     });
 
     const initialValues = {
-        email: "",
+        usernameOrEmail: "",
         password: ""
     };
 
@@ -21,7 +21,7 @@ const LoginPage = () => {
     const onSubmit = (values) => {
         // console.log("form data: ", values)
         axios
-            .post("https://api.escuelajs.co/api/v1/auth/login", values)
+            .post("http://localhost:9191/api/auth/login", values)
             .then(
                 (response) => {
                     console.log(response.data);
@@ -45,9 +45,9 @@ const LoginPage = () => {
     };
 
     const validationSchema = Yup.object({
-        email: Yup.string()
-            .required("email is required")
-            .email("invalid email format"),
+        usernameOrEmail: Yup.string()
+            .required("username or email is required"),
+            // .email("invalid email format"),
         password: Yup.string()
             .required("password is required")
             .min(6, "password must be at least 6 characters")
@@ -75,17 +75,17 @@ const LoginPage = () => {
                             {formik => (
                                 <Form>
                                     <div className="form-group">
-                                        <label>Email</label>
+                                        <label>Username or Email</label>
                                         <Field
                                             type="text"
-                                            name="email"
+                                            name="usernameOrEmail"
                                             className={
-                                                formik.errors.email && formik.touched.email
+                                                formik.errors.usernameOrEmail && formik.touched.usernameOrEmail
                                                     ? "form-control is-invalid"
                                                     : "form-control"
                                             }
                                         />
-                                        <ErrorMessage name="email">
+                                        <ErrorMessage name="usernameOrEmail">
                                             {errorMessage => (
                                                 <small className="text-danger">{errorMessage}</small>
                                             )}

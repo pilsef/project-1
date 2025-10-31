@@ -8,7 +8,7 @@ const CategoryList = () => {
 
     const fetchData = () => {
         axios
-            .get("https://api.escuelajs.co/api/v1/categories")
+            .get("http://localhost:9191/api/categories")
             .then(response => setCategories(response.data))
             .catch(error => console.log(error));
     };
@@ -23,7 +23,7 @@ const CategoryList = () => {
             <div className="row row-cols-4">
                 {
                     categories.map( category => (
-                        <Category key={category.id} data={category} />
+                        <Category key={category.categoryId} data={category} />
                     ))
                 }
             </div>

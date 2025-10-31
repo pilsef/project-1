@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 
 const Category = (props) => {
 
-    const { id, name, image } = props.data;
+    const { categoryId, categoryName, photoUrl } = props.data;
 
     return (
         <div className="col mb-4">
             <div class="card h-100">
-                <img src={image} className="card-img-top" alt={name} />
+                <img src={photoUrl} className="card-img-top" alt={categoryName} />
                 <div className="card-body">
-                    <h5 className="card-title">{name}</h5>
+                    <h5 className="card-title">{categoryName}</h5>
                     <Link to="/products" className="btn btn-primary btn-block">
                         Select
                     </Link>

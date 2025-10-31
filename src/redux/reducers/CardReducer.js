@@ -16,7 +16,7 @@ export const cartReducer = (state = initialState, { type, payload }) => {
             const items = state.items;
             let isExists = false;
             items.map((item, idx) => {
-                if (item.id === payload.id) {
+                if (item.productId === payload.productId) {
                     items[idx].quantity += 1;
                     isExists = true;
                 }
@@ -39,7 +39,7 @@ export const cartReducer = (state = initialState, { type, payload }) => {
             let idxExisting = -1;
 
             items.map((item, idx) => {
-                if (item.id === payload.id) {
+                if (item.productId === payload.productId) {
                     items[idx].quantity -= 1;
                     idxExisting = idx;
                 }
@@ -55,7 +55,7 @@ export const cartReducer = (state = initialState, { type, payload }) => {
         }
         case ActionTypes.DELETE_FROM_CART: {
             const items = state.items;
-            const idxExisting = items.findIndex(i => i.id === payload.id);
+            const idxExisting = items.findIndex(i => i.productId === payload.productId);
 
             if (idxExisting !== -1) {
                 const quantityRemoved = items[idxExisting].quantity;

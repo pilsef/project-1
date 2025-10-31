@@ -14,12 +14,12 @@ const CartItem = (props) => {
         <div className="card mb-3">
             <div className="row no-gutters">
                 <div className="col-2">
-                    <img src={item.images[0]} alt="..." className="img-fluid" />
+                    <img src={item.photoUrl} alt="..." className="img-fluid" />
                 </div>
                 <div className="col-7">
                     <div className="card-body">
-                        <h5 className="card-title">{item.title}</h5>
-                        <p className="card-text">${item.price}</p>
+                        <h5 className="card-title">{item.productName}</h5>
+                        <p className="card-text">${(item.price / 100).toFixed(2)}</p>
                         {/* <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p> */}
                     </div>
                 </div>

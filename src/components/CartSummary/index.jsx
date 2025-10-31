@@ -4,7 +4,7 @@ const CartSummary = () => {
 
     const state = useSelector(state => state);
 
-    const costItems = state.items.map(item => item.price * item.quantity).reduce((a, b) => a + b, 0);
+    const costItems = state.items.map(item => item.price * item.quantity).reduce((a, b) => a + b, 0) / 100;
     const costShipping = Math.ceil(costItems * 0.15);
 
     return (
